@@ -1,0 +1,23 @@
+{
+	"name" : "jmfiaschi/zf-referential",
+	"description" : "Build dynamique referential",
+	"keywords" : [
+		"referential",
+		"zend"
+	],
+	"authors" : [{
+			"name" : "Jean-Marc Fiaschi",
+			"email" : "jm.fiaschi@gmail.com"
+		}
+	],
+	"require" : {
+		"php" : ">=5.3.3",
+		"zendframework/zendframework" : "2.*",
+		"dudapiotr/zftable" : "2.0"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"ZfTableDoctrine" : "src/"
+		}
+	}
+}

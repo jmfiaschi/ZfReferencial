@@ -1,0 +1,82 @@
+<?php
+
+namespace ZfReferential;
+
+use Zend\EventManager\EventInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\Mvc\MvcEvent;
+
+class Module
+    implements BootstrapListenerInterface,
+               ConfigProviderInterface,
+               ServiceProviderInterface,
+               DependencyIndicatorInterface
+{
+
+    /**
+     * Listen to the bootstrap event
+     *
+     * @param MvcEvent|EventInterface $e
+     * @return array
+     */
+    public function onBootstrap(EventInterface $e)
+    {
+
+        $application    = $e->getApplication();
+        $serviceManager = $application->getServiceManager();
+    }
+
+
+    /**
+     * Returns configuration to merge with application configuration
+     *
+     * @return array|\Traversable
+     */
+    public function getConfig()
+    {
+        return include __DIR__ . '/../../config/module.config.php';
+    }
+
+    /**
+     *
+     * Set autoloader config for RbacUserDoctrineOrm module
+     *
+     * @return array\Traversable
+     */
+    public function getAutoloaderConfig()
+    {
+        return array(
+            'Zend\Loader\StandardAutoloader' => array(
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__,
+                ),
+            ),
+        );
+    }
+    
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getServiceConfig()
+    {
+        return include __DIR__ . '/../../config/services.config.php';
+    }
+
+    /**
+     * Expected to return an array of modules on which the current one depends on
+     *
+     * @return array
+     */
+    public function getModuleDependencies()
+    {
+        return array(
+            'DoctrineModule', 'DoctrineORMModule', 'ZfcBase', 'ZfcUserDoctrineORM'
+        );
+    }
+}
