@@ -19,5 +19,6 @@
 		"psr-0" : {
 			"ZfTableDoctrine" : "src/"
 		}
-	}
+	},
+	"minimum-stability":"dev"
 }
