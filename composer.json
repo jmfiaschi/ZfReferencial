@@ -17,8 +17,8 @@
 	},
 	"autoload" : {
 		"psr-0" : {
-			"ZfTableDoctrine" : "src/"
+			"ZfReferential" : "src/"
 		}
 	},
-	"minimum-stability":"dev"
+	"minimum-stability" : "dev"
 }

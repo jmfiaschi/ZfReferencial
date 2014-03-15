@@ -1,2 +1,2 @@
 <?php
-require_once __DIR__ . '/src/ZfReferencial/Module.php';
+require_once __DIR__  . '/src/ZfReferential/Module.php';
