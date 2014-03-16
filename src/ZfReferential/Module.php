@@ -1,5 +1,4 @@
 <?php
-
 namespace ZfReferential;
 
 use Zend\EventManager\EventInterface;
@@ -8,11 +7,13 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
 
 class Module
     implements BootstrapListenerInterface,
                ConfigProviderInterface,
                ServiceProviderInterface,
+               ControllerProviderInterface,
                DependencyIndicatorInterface
 {
 
@@ -58,25 +59,30 @@ class Module
     }
     
     /**
-     * Expected to return \Zend\ServiceManager\Config object or array to
-     * seed such an object.
-     *
-     * @return array|\Zend\ServiceManager\Config
+     * (non-PHPdoc)
+     * @see \Zend\ModuleManager\Feature\ServiceProviderInterface::getServiceConfig()
      */
     public function getServiceConfig()
     {
         return include __DIR__ . '/../../config/services.config.php';
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \Zend\ModuleManager\Feature\ControllerProviderInterface::getControllerConfig()
+     */
+    public function getControllerConfig() {
+    	return include __DIR__ . '/../../config/controllers.config.php';
+    }
 
     /**
-     * Expected to return an array of modules on which the current one depends on
-     *
-     * @return array
+     * (non-PHPdoc)
+     * @see \Zend\ModuleManager\Feature\DependencyIndicatorInterface::getModuleDependencies()
      */
     public function getModuleDependencies()
     {
         return array(
-            'DoctrineModule', 'DoctrineORMModule', 'ZfcBase', 'ZfcUserDoctrineORM'
+            'ZfcRbac'
         );
     }
 }
