@@ -9,11 +9,21 @@ use Zend\Db\Metadata\Object\ConstraintObject;
 use ZfTable\Source\InMemory as InMemorySource;
 use ZfTable\Source\SourceInterface;
 
-class Metadata extends InMemory
+class Index extends InMemory
 {
+	/**
+	 *
+	 * @var array
+	 */
+	protected $referentials = array();
+	
+	/**
+	 * 
+	 * @var array
+	 */
     protected $config = array(
         'name' => 'Tables',
-    	'showPagination' => false,
+    	'showPagination' => true,
     	'showQuickSearch'	=>	false,
     	'showItemPerPage'	=>	false,
     	'showColumnFilters' => false,
@@ -28,31 +38,17 @@ class Metadata extends InMemory
      * 
      * @param Adapter $adapter
      */
-    public function __construct(Adapter $adapter){
-    	$metadata = new DbMetadata($adapter);
-    	$tableNames = $metadata->getTableNames();
+    public function __construct($referentials){
+    	$this->referentials = $referentials;
     	
-    	$metadatas = array();
-    	if(count($tableNames)){
-    		foreach($tableNames as $tableName){
-    			/* @var $table TableObject */
-    			$table = $metadata->getTable($tableName);
-    			
-    			/** Add only if is not a table join */
-    			$pkc = null;
-    			if( count($table->getConstraints()) ){
-	    			foreach($table->getConstraints() as $constraint){
-	    				/* @var $constraint ConstraintObject */
-			            if ( $constraint->getType() == 'PRIMARY KEY' ){ 
-			            	if( count($table->getColumns()) != count($constraint->getColumns()) ){
-			                	$metadatas[$tableName] = array('name'=>$tableName,'metadata'=>$table);
-			            	}
-			            }
-	    			}
-    			}
-    		}
+    	$sources = array();
+    	if(count($this->referentials)){
+	    	foreach($this->referentials as $key=>$referential){
+	    		$sources[] = array('name'=>$key);
+	    	}
     	}
-    	$this->setSource(new InMemorySource($metadatas));
+    	
+    	$this->setSource(new InMemorySource($sources));
     }
 	
     /**
@@ -60,9 +56,6 @@ class Metadata extends InMemory
      */
     public function init()
     {
-        //Table attributes
-        $this->addAttr('id', 'metadata');
-        
         $this->getHeader('name')->getCell()->addDecorator('link', array(
         		'url' => '/referential/list/%s',
         		'vars' => array('name')

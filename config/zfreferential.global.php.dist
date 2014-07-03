@@ -1,0 +1,9 @@
+<?php
+$settings = [
+    //referentials collection
+	'referentials' => []
+];
+
+return [
+    'zf_referential' => $settings
+];
