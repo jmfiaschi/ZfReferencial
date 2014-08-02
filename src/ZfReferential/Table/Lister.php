@@ -69,11 +69,11 @@ class Lister extends TableAbstract
     	if(count($this->getHeaders())){
 	    	$array = array_keys($this->getHeaders());
 	    	$this->getHeader('edit')->getCell()->addDecorator('template', array(
-	    			'template' => '<button type="button" class="btn btn-default btn-sm edit" onclick="javascript:window.location=\'/referential/edit/'.$this->referential.'?'.implode('=%s&',$this->fields).'=%s\';"><span class="glyphicon glyphicon-pencil"></span>edit</button>',
+	    			'template' => '<button type="button" class="btn btn-primary btn-sm edit" onclick="javascript:window.location=\'/referential/edit/'.$this->referential.'?'.implode('=%s&',$this->fields).'=%s\';"><span class="glyphicon glyphicon-pencil"></span></button>',
 	    			'vars'	=>	$this->fields
 	    	));
 	    	$this->getHeader('delete')->getCell()->addDecorator('template', array(
-	    			'template' => '<button type="button" class="btn btn-default btn-sm delete" onclick="javascript:window.location=\'/referential/delete/'.$this->referential.'?'.implode('=%s&',$this->fields).'=%s\';"><span class="glyphicon glyphicon-remove-circle"></span>delete</button>',
+	    			'template' => '<button type="button" class="btn btn-danger btn-sm delete" onclick="javascript:window.location=\'/referential/delete/'.$this->referential.'?'.implode('=%s&',$this->fields).'=%s\';"><span class="glyphicon glyphicon-remove-circle"></span></button>',
 	    			'vars'	=>	$this->fields
 	    	));
     	}
@@ -99,17 +99,20 @@ class Lister extends TableAbstract
     	
     	if(count($list)){
     		if(is_object($list[0])){
-    			$this->fields = array_keys($this->hydrator->extract($list[0]));
-    		}elseif(is_array($list[0])){
-    			$this->fields = array_keys($list[0]);
+    			$array = array();
+    			foreach($list as $element){
+    				$array[] = $this->hydrator->extract($element);
+    			}
+    			$list = $array;
     		}
+    		$this->fields = array_keys($list[0]);
     		
     		if(count($this->fields)){
 	    		foreach ($this->fields as $value){
-	    			$headers[$value] = array('title' => $value, 'filters' => 'text');
+	    			$headers[$value] = array('title' => $this->getTranslate()->translate($value), 'filters' => 'text');
 	    		}
-	    		$headers['edit'] = array('title' => '');
-	    		$headers['delete'] = array('title' => '');
+	    		$headers['edit'] = array('title' => $this->getTranslate()->translate('edit'));
+	    		$headers['delete'] = array('title' => $this->getTranslate()->translate('delete'));
 	    		$this->setHeaders($headers);
     		}else{
     			throw new RuntimeException("Impossible to get public properties of object");

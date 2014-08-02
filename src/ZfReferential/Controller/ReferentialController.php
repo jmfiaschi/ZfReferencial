@@ -79,7 +79,6 @@ class ReferentialController extends AbstractActionController
     }
     
     public function editAction(){
-    	/* @var $referential \ZfReferential\Mapper\MapperInterface  */
     	if( !($list = $this->referentials[$this->params('name',null)] ) ){
     		throw new InvalidArgumentException(sprintf(
                 'This referential not exist: "%s"',
@@ -98,21 +97,16 @@ class ReferentialController extends AbstractActionController
     	$object = null;
     	$position = null;
     	
-    	foreach($list as $key=>$row){
-    		if(is_object($row)){
-    			$protectiesCheck = $hydrator->extract($row);
-    		}else{
-    			$protectiesCheck = $row;
-    		}
-    		if(count($protectiesCheck)){
-    			foreach($protectiesCheck as $key=>$propertie){
-    				if($propertie == $this->params()->fromQuery($key,null)){
-    					unset($protectiesCheck[$key]);
-    				}
+    	foreach($list as $key=>$itemList){
+    		if(is_object($itemList)){
+    			$itemQuery = $hydrator->hydrate($this->params()->fromQuery(), new $itemList());
+    			if($itemList == $itemQuery){
+    				$object = $itemList;
+    				break;
     			}
-    			if(count($protectiesCheck) == 0){
-    				$object = $row;
-    				$position = $key;
+    		}else{
+    			if(!count(array_diff($itemList, $this->params()->fromQuery()))){
+    				$object = $itemList;
     				break;
     			}
     		}
