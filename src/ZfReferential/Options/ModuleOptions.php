@@ -1,18 +1,4 @@
 <?php
-/**
- * RoleOptions.php file
- * 
- * PHP Version 5
- * 
- * @category   ${category}
- * @package    Inventis
- * @subpackage Bricks
- * @author     Inventis Web Architects <info@inventis.be>
- * @license    Copyright © Inventis BVBA  - All rights reserved
- * @link       https://github.com/Inventis/Bricks
- */
-
-
 namespace ZfReferential\Options;
 
 
@@ -23,26 +9,26 @@ class ModuleOptions extends AbstractOptions {
     /**
      * @var array
      */
-    protected $referentials = array();
+    protected $ressources = array();
 
     /**
-     * Get the referentials options
+     * Get the ressources options
      *
      * @return array
      */
-    public function getReferentials()
+    public function getRessources()
     {
-    	return $this->referentials;
+    	return $this->ressources;
     }
     
     /**
-     * Set the referentials options
+     * Set the ressources options
      *
-     * @param  array $referentials
+     * @param  array $ressources
      * @return void
      */
-    public function setReferentials($referentials)
+    public function setRessources($ressources)
     {
-    	$this->referentials = $referentials;
+    	$this->ressources = $ressources;
     }
 }

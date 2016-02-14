@@ -1,2 +1,16 @@
-<?php 
-echo $this->form($this->form);
+<section class="zf-referential">
+	<header>
+		<h1><?php echo $this->translate('referential') ?></h1>
+	</header>
+	<article>
+		<header>
+			<h3><?php echo $this->translate('edition')?></h3>
+		</header>
+		<?php echo $this->form($this->form);?>
+		<aside>
+            <a class="btn btn-default btn-sm" href="<?php echo $this->url('modules.zf-referential/list',array(),null,true);//echo $this->url('modules.zf-referential/list',array('name'=>)) ?>">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;<?php echo $this->translate('previous') ?>
+            </a>
+    	</aside>
+	</article>
+</section>

@@ -17,7 +17,7 @@ return array(
 	),
     'router' => array(
         'routes' => array(
-            'referential' => array(
+            'modules.zf-referential' => array(
                 'type' => 'Literal',
                 'priority' => 1000,
                 'options' => array(
@@ -29,7 +29,6 @@ return array(
                 ),
                 'may_terminate' => true,
             	'child_routes' => array(
-            		// Segment route for viewing one blog post
             		'list' => array(
             			'type' => 'segment',
             			'options' => array(
@@ -42,22 +41,59 @@ return array(
             				)
             			)
             		),
-            		// Segment route for viewing one blog post
             		'edit' => array(
             			'type' => 'segment',
             			'options' => array(
             				'route' => '/edit/[:name]',
             				'constraints' => array(
-            					'name' => '[a-zA-Z0-9_-]+',
-            					'ids' => '[0-9-]*'
+            					'name' => '[a-zA-Z0-9_-]+'
             				),
             				'defaults' => array(
             					'action'     => 'edit',
+            				)
+            			)
+            		),
+            		'delete' => array(
+            			'type' => 'segment',
+            			'options' => array(
+            				'route' => '/delete/[:name]',
+            				'constraints' => array(
+            					'name' => '[a-zA-Z0-9_-]+'
+            				),
+            				'defaults' => array(
+            					'action'     => 'delete',
+            				)
+            			)
+            		),
+            		'add' => array(
+            			'type' => 'segment',
+            			'options' => array(
+            				'route' => '/add/[:name]',
+            				'constraints' => array(
+            					'name' => '[a-zA-Z0-9_-]+'
+            				),
+            				'defaults' => array(
+            					'action'     => 'add',
             				)
             			)
             		)
             	)
             ),
         ),
-    )
+    ),
+	'assets_bundle' => array(
+		'recursiveSearch' => true,
+		'assets' => array(
+			'ZfReferential' => array(
+				'js' => array(
+					'js/jquery.dataTables.min.js',
+					'js/zf-table.js',
+					'js/zf-referential.js'
+				),
+				'css'	=> array(
+					'css/zf-table/zf-table.css'
+				)
+			)
+		)
+	),
 );

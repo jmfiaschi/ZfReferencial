@@ -1,9 +1,14 @@
-<section>
+<section class="zf-referential">
 	<header>
-		<h1><?php echo $this->translate('Referential') ?></h1>
-		<h2><?php echo $this->translate('This module allows you to manage the referential of your application') ?></h2>
+		<h1><?php echo $this->translate('referential') ?></h1>
+		<h2><?php echo $this->translate('list of elements') ?></h2>
 	</header>
 	<div class="table-responsive">
-		<?php echo $this->table;?>
+		<?php echo $this->table->render();?>
 	</div>
+	<aside>
+        <a class="btn btn-default btn-sm" href="<?php echo $this->url('modules.zf-referential') ?>">
+            <span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;<?php echo $this->translate('previous') ?>
+        </a>
+	</aside>
 </section>

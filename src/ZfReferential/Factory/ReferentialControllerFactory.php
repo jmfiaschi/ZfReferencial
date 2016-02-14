@@ -21,12 +21,11 @@ class ReferentialControllerFactory implements FactoryInterface
         $moduleOptions = $parentLocator->get('ZfReferential\Options\ModuleOptions');
         
         $controller = new ReferentialController();
-        if(is_string($moduleOptions->getReferentials())){
-        	$controller->setReferentials($parentLocator->get($moduleOptions->getReferentials()));
-        }elseif($moduleOptions->getReferentials() instanceof Countable){
-        	$controller->setReferentials($moduleOptions->getReferentials());
-        }elseif(is_array($moduleOptions->getReferentials())){
-        	$controller->setReferentials($moduleOptions->getReferentials());
+        if(is_string($moduleOptions->getRessources())){
+        	$controller->setReferentialList($parentLocator->get($moduleOptions->getRessources()));
+        }elseif($moduleOptions->getRessources() instanceof \Countable
+			|| is_array($moduleOptions->getRessources()) ){
+        	$controller->setReferentialList($moduleOptions->getRessources());
         }
 
         return $controller;

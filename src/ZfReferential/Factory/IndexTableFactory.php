@@ -5,7 +5,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\MutableCreationOptionsInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfReferential\Table\Index;
-use ZfReferential\Mapper\MapperInterface;
+use ZfReferential\Collection\RessourceCollectionInterface;
 
 class IndexTableFactory implements FactoryInterface
 {
@@ -18,20 +18,16 @@ class IndexTableFactory implements FactoryInterface
         /* @var $moduleOptions \ZfReferential\Options\ModuleOptions  */
         $moduleOptions = $serviceLocator->get('ZfReferential\Options\ModuleOptions');
         
-        $translate = $serviceLocator->get('translator');
-        
-        
-        
         $referentials = null;
-        if(is_string($moduleOptions->getReferentials())){
-        	$referentials = $serviceLocator->get($moduleOptions->getReferentials());
-        }elseif($moduleOptions->getReferentials() instanceof Countable){
-        	$referentials = $moduleOptions->getReferentials();
-        }elseif(is_array($moduleOptions->getReferentials())){
-        	$referentials = $moduleOptions->getReferentials();
+        if(is_string($moduleOptions->getRessources())){
+        	$referentials = $serviceLocator->get($moduleOptions->getRessources());
+        }elseif($moduleOptions->getRessources() instanceof \Countable
+			|| is_array($moduleOptions->getRessources()) ){
+        	$referentials = $moduleOptions->getRessources();
         }
         
         $table = new Index($referentials);
+        $translate = $serviceLocator->get('translator');
         $table->setTranslate($translate);
 
         return $table;

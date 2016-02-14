@@ -81,8 +81,6 @@ class Module
      */
     public function getModuleDependencies()
     {
-        return array(
-            'ZfcRbac'
-        );
+        return array();
     }
 }

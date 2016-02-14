@@ -13,6 +13,12 @@ class ModuleOptionsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ModuleOptions($serviceLocator->get('Config')['zf_referential']);
+    	$referential = $serviceLocator->get('Config')['zf_referential'];
+    	
+    	$ressourceCollection = $serviceLocator->get('ZfReferential\Collection\Ressource');
+
+    	$referential['ressources'] = $ressourceCollection;
+    	
+        return new ModuleOptions($referential);
     }
 }
